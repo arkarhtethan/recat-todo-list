@@ -1,26 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import TodoList from "./components/TodoList/TodoList";
+import "./assets/css/materialize.min.css"
+import AddTodo from "./components/AddTodo/AddTodo"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  state = {
+    todoItems : []
+  };
+
+  deleteTodoItem = (id) => {
+
+    let todos = this.state.todoItems.filter((todo)=>{
+ 
+      return todo.id !== id;
+ 
+    });
+
+    this.setState({todoItems:todos});
+
+  }
+
+  addTodo = (todo) => {
+    let todos = [...this.state.todoItems,todo]
+    this.setState({todoItems:todos})
+  }
+
+
+  render() {
+
+    return (
+    
+      <div className="App container">
+
+        <h1 className="center blue-text"> Simple Todo List </h1>
+
+        <AddTodo addTodo={this.addTodo}/>
+    
+        <TodoList todos={this.state.todoItems} deleteHandler={this.deleteTodoItem} />
+    
+      </div>
+    
+    ); 
+  }
 }
 
 export default App;
